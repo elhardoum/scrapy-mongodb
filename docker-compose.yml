@@ -1,7 +1,7 @@
 version: '3'
 
 services:
-  app:
+  db:
     image: mongo:latest
     container_name: app
     environment:
@@ -12,3 +12,13 @@ services:
     ports:
         - 27017:27017
     command: mongod --smallfiles --logpath=/dev/null # --quiet
+
+  app:
+    image: python-app
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./src:/app
+    depends_on:
+      - db

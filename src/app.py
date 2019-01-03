@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 import scrapy
 
-MONGO_CONNECTION_URI = 'mongodb://app:27017'
+MONGO_CONNECTION_URI = 'mongodb://db:27017'
 DATABASE_NAME = 'infocif'
 MAIN_COLLECTION = 'data'
 # IMAGES_COLLECTION = 'images'
 
 class Spidey(scrapy.Spider):
-    name = "quotes"
+    name = "spidey"
     start_urls = []
     company = None
     company_id = None
@@ -115,7 +115,7 @@ class Spidey(scrapy.Spider):
         client = MongoClient(MONGO_CONNECTION_URI)
         db = client[ DATABASE_NAME ]
         data = db[MAIN_COLLECTION]
-        images = db[IMAGES_COLLECTION]
+        # images = db[IMAGES_COLLECTION]
 
         # store image
         # result = images.insert_one( { 'base64': self.imagetobase64( self.data[0]['logo']['u'] ) } )
@@ -136,7 +136,13 @@ class Spidey(scrapy.Spider):
             print( "Failed insert!", self.data ) 
 
     def imagetobase64(self, url):
-        import urllib2
+        try:
+            import urllib2
+            contents = urllib2.urlopen(url).read()
+        except ModuleNotFoundError:
+            import urllib
+            request = urllib.request.Request(url)
+            contents = urllib.request.urlopen(request).read()
+
         import base64
-        contents = urllib2.urlopen(url).read()
         return base64.b64encode(contents)
