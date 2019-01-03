@@ -16,3 +16,7 @@ pip install -r requirements.txt
 # to run the scraper
 scrapy runspider app.py -a company='leonardo-azpiri-sa'
 ```
+
+## Todo
+
+- [ ] Add `Dockerfile` build for Python, and docker instructions

@@ -6,7 +6,7 @@ DATABASE_NAME = 'infocif'
 MAIN_COLLECTION = 'data'
 # IMAGES_COLLECTION = 'images'
 
-class QuotesSpider(scrapy.Spider):
+class Spidey(scrapy.Spider):
     name = "quotes"
     start_urls = []
     company = None
